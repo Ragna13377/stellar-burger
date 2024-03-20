@@ -22,3 +22,7 @@
   flex-direction: column;
   align-items: center;
 }
+
+.directLink {
+  margin: 120px auto 0;
+}

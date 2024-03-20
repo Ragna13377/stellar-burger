@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import {
   Input,
   Button,
@@ -8,17 +8,15 @@ import styles from '../common.module.css';
 import { Link } from 'react-router-dom';
 import { LoginUIProps } from './type';
 
-export const LoginUI: FC<LoginUIProps> = ({
+export const LoginUI: FC<LoginUIProps & { location: string }> = ({
   email,
   setEmail,
   errorText,
   handleSubmit,
   password,
-  setPassword
+  setPassword,
+  location
 }) => (
-  /*
-    Отображение ошибок и валидация форм в "можно лучше"
-  */
   <main className={styles.container}>
     <div className={`pt-6 ${styles.wrapCenter}`}>
       <h3 className='pb-6 text text_type_main-medium'>Вход</h3>
@@ -61,7 +59,11 @@ export const LoginUI: FC<LoginUIProps> = ({
       </form>
       <div className={`pb-4 ${styles.question} text text_type_main-default`}>
         Вы - новый пользователь?
-        <Link to='/register' className={`pl-2 ${styles.link}`}>
+        <Link
+          to='/register'
+          className={`pl-2 ${styles.link}`}
+          state={{ from: location }}
+        >
           Зарегистрироваться
         </Link>
       </div>

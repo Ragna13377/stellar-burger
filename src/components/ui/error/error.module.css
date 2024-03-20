@@ -1,0 +1,13 @@
+.error {
+  display: block;
+  line-height: 40px;
+  margin: auto;
+  font-size: 30px;
+  font-family: 'Jet Brains Mono';
+  text-align: center;
+}
+.recommendation {
+  display: block;
+  border-bottom: 1px solid white;
+  cursor: pointer;
+}
