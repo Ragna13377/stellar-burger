@@ -37,4 +37,11 @@ export type TUser = {
   name: string;
 };
 
+export type TLoadingState = {
+  loadingState: {
+    isLoading: boolean;
+    error: string | undefined;
+  };
+};
+
 export type TTabMode = 'bun' | 'sauce' | 'main';
