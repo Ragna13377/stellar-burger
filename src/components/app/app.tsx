@@ -25,6 +25,7 @@ import { fetchIngredients } from '../../services/ingredients/actions';
 import { Layout } from '../../pages/layout';
 import { ProtectedRoute } from '../../utils/protected-route';
 import { fetchUser } from '../../services/profile/actions';
+import { getCookie } from '../../utils/cookie';
 
 const App = () => {
   const location = useLocation();
@@ -33,7 +34,8 @@ const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchIngredients());
-    dispatch(fetchUser());
+    if (getCookie('accessToken') || localStorage.getItem('refreshToken'))
+      dispatch(fetchUser());
   }, []);
   return (
     <>

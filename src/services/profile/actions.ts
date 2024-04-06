@@ -8,7 +8,7 @@ import {
   TRegisterData,
   updateUserApi
 } from '@api';
-import { deleteCookie, setCookie } from '../../utils/cookie';
+import { deleteCookie, getCookie, setCookie } from '../../utils/cookie';
 
 export const fetchUser = createAsyncThunk('profile/getUser', async () => {
   const response = await getUserApi();
@@ -25,6 +25,7 @@ export const logOutUser = createAsyncThunk('profile/logOutUser', async () => {
   await logoutApi();
   deleteCookie('accessToken');
   localStorage.removeItem('refreshToken');
+  return null;
 });
 export const registerUser = createAsyncThunk(
   'profile/registerUser',

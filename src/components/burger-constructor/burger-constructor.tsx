@@ -15,7 +15,6 @@ import { useDispatch } from '../../services/store';
 import { makeOrder } from '../../services/ownOrders/actions';
 import { combineOrder } from '../../utils/utils';
 import { getUser } from '../../services/profile/slice';
-import { navigate } from '@storybook/addon-links';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {

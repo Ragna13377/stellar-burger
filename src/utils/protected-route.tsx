@@ -1,6 +1,6 @@
-import React, { ReactNode, useEffect } from 'react';
+import React, { ReactNode } from 'react';
 import { getUser, getUserLoadingState } from '../services/profile/slice';
-import { useDispatch, useSelector } from '../services/store';
+import { useSelector } from '../services/store';
 import { Preloader } from '@ui';
 import { Navigate, useLocation } from 'react-router-dom';
 

@@ -2,10 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 import { fetchIngredients } from './actions';
 import { TIngredient, TLoadingState } from '@utils-types';
 
-type TIngredients = TLoadingState & {
+export type TIngredients = TLoadingState & {
   items: TIngredient[] | null;
 };
-const initialState: TIngredients = {
+export const initialState: TIngredients = {
   items: null,
   loadingState: {
     isLoading: false,

@@ -1,11 +1,11 @@
-import { TConstructorIngredient, TIngredient } from '@utils-types';
+import { TConstructorIngredient } from '@utils-types';
 import { createSlice } from '@reduxjs/toolkit';
 
 export type TBurgerConstructor = {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 };
-const initialState: TBurgerConstructor = {
+export const initialState: TBurgerConstructor = {
   bun: null,
   ingredients: []
 };

@@ -8,7 +8,7 @@ type TOrders = TLoadingState & {
   orders: TOrder[] | null;
   totals: Pick<TFeedsResponse, 'total' | 'totalToday'>;
 };
-const initialState: TOrders = {
+export const initialState: TOrders = {
   searchedOrder: null,
   orders: null,
   totals: {

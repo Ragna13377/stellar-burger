@@ -14,15 +14,15 @@ type TUserLoading = TLoadingState & {
     isRequestOver: boolean;
   };
 };
-type TProfile = TUserLoading & {
+export type TProfile = TUserLoading & {
   user: TUser | null;
 };
-const initialState: TProfile = {
+export const initialState: TProfile = {
   user: null,
   loadingState: {
     isLoading: false,
     error: undefined,
-    isRequestOver: false,
+    isRequestOver: true,
     isAuthenticated: false
   }
 };
@@ -36,8 +36,8 @@ const profileSlice = createSlice({
     getUserError: (state) => state.loadingState.error
   },
   extraReducers: (builder) => {
-    builder.addCase(logOutUser.fulfilled, (state) => {
-      state.user = null;
+    builder.addCase(logOutUser.fulfilled, (state, action) => {
+      state.user = action.payload;
     }),
       builder.addCase(fetchUser.fulfilled, (state, action) => {
         state.loadingState.isAuthenticated = true;

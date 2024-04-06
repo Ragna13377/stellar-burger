@@ -7,7 +7,7 @@ type TOwnOrders = TLoadingState & {
   allOrders: TOrder[] | null;
   name: string;
 };
-const initialState: TOwnOrders = {
+export const initialState: TOwnOrders = {
   lastOrder: null,
   allOrders: null,
   name: '',
