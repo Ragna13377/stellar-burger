@@ -20,7 +20,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
 }) => (
   <section className={styles.burger_constructor}>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mb-4 mr-4`}>
+      <div className={`${styles.element} mb-4 mr-4`} data-cy='ingredientsBun'>
         <ConstructorElement
           type='top'
           isLocked
@@ -57,7 +57,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
       )}
     </ul>
     {constructorItems.bun ? (
-      <div className={`${styles.element} mt-4 mr-4`}>
+      <div className={`${styles.element} mt-4 mr-4`} data-cy='ingredientsBun'>
         <ConstructorElement
           type='bottom'
           isLocked
@@ -73,7 +73,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         Выберите булки
       </div>
     )}
-    <div className={`${styles.total} mt-10 mr-4`}>
+    <div className={`${styles.total} mt-10 mr-4`} data-cy='sendOrder'>
       <div className={`${styles.cost} mr-10`}>
         <p className={`text ${styles.text} mr-2`}>{price}</p>
         <CurrencyIcon type='primary' />
@@ -86,7 +86,7 @@ export const BurgerConstructorUI: FC<BurgerConstructorUIProps> = ({
         onClick={onOrderClick}
       />
     </div>
-    {/* Прелоадер в данном месте в "Можно лучше" */}
+
     {orderRequest && (
       <Modal onClose={closeOrderModal} title={'Оформляем заказ...'}>
         <Preloader />
