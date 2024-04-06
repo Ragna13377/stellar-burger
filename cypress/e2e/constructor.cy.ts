@@ -2,10 +2,9 @@ import { data as mockIngredients } from '../fixtures/ingredients.json';
 import { order as mockOrder } from '../fixtures/orderResponse.json';
 import { accessToken, refreshToken } from '../fixtures/tokens.json';
 import { setCookie } from '../../src/utils/cookie';
-import { afterEach } from 'mocha';
 describe('Тестирование бургер конструктора', () => {
   beforeEach(() => {
-    cy.visit('http://localhost:4000/');
+    cy.visit('/');
     setCookie('accessToken', accessToken);
     localStorage.setItem('refreshToken', refreshToken);
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' }).as(
@@ -40,25 +39,44 @@ describe('Тестирование бургер конструктора', () =>
         mockIngredients.length
       );
     });
-  })
+  });
   describe('Тестирование оформления заказа', () => {
     beforeEach(() => {
-      cy.get('[data-cy="ingredientList"]').as('ingredientList').contains('Краторная булка').parent().contains('Добавить').click();
-      cy.get('@ingredientList').contains('Биокотлета').parent().contains('Добавить').click();
-      cy.get('@ingredientList').contains('Spicy-X').parent().contains('Добавить').click();
-    })
+      cy.get('[data-cy="ingredientList"]')
+        .as('ingredientList')
+        .contains('Краторная булка')
+        .parent()
+        .contains('Добавить')
+        .click();
+      cy.get('@ingredientList')
+        .contains('Биокотлета')
+        .parent()
+        .contains('Добавить')
+        .click();
+      cy.get('@ingredientList')
+        .contains('Spicy-X')
+        .parent()
+        .contains('Добавить')
+        .click();
+    });
     it('Добавление ингредиентов в конструктор', () => {
       cy.get('[data-cy="ingredientsBun"]').each((element) => {
-        cy.wrap(element).contains('Краторная булка').should('exist')
-      })
-      cy.get('[data-cy="ingredientFill"]').as('ingredientFill').contains('Биокотлета').should('exist');
+        cy.wrap(element).contains('Краторная булка').should('exist');
+      });
+      cy.get('[data-cy="ingredientFill"]')
+        .as('ingredientFill')
+        .contains('Биокотлета')
+        .should('exist');
       cy.get('@ingredientFill').contains('Spicy-X').should('exist');
     });
     it('Отправка заказа на сервер', () => {
       cy.intercept('POST', 'api/orders', {
         fixture: 'orderResponse.json'
       }).as('getOrder');
-      cy.get('[data-cy="sendOrder"]').contains('Оформить').should('be.enabled').click();
+      cy.get('[data-cy="sendOrder"]')
+        .contains('Оформить')
+        .should('be.enabled')
+        .click();
       cy.wait('@getOrder');
       cy.get('[data-cy="modalContent"]')
         .as('modalContent')
