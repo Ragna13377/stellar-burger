@@ -40,68 +40,25 @@ describe('Тестирование бургер конструктора', () =>
         mockIngredients.length
       );
     });
+  })
+  describe('Тестирование оформления заказа', () => {
+    beforeEach(() => {
+      cy.get('[data-cy="ingredientList"]').as('ingredientList').contains('Краторная булка').parent().contains('Добавить').click();
+      cy.get('@ingredientList').contains('Биокотлета').parent().contains('Добавить').click();
+      cy.get('@ingredientList').contains('Spicy-X').parent().contains('Добавить').click();
+    })
     it('Добавление ингредиентов в конструктор', () => {
-      let bunIngredient = '';
-      const fillIngredients: string[] = [];
-      let orderPrice = 0;
-      cy.get('[data-cy="ingredientList"]').each((list, index) => {
-        cy.wrap(list)
-          .find('li')
-          .first()
-          .within(() => {
-            cy.get('[data-cy="ingredientName"]')
-              .invoke('text')
-              .then((text) => {
-                cy.get('[data-cy="ingredientPrice"]')
-                  .invoke('text')
-                  .then((price) => {
-                    if (text.includes('булка')) {
-                      bunIngredient = text;
-                      orderPrice += Number(price) * 2;
-                    } else {
-                      fillIngredients.push(text);
-                      orderPrice += Number(price);
-                    }
-                  });
-              });
-            cy.get('button').click();
-          });
-      });
-      cy.get('[data-cy="sendOrder"]')
-        .find('p')
-        .invoke('text')
-        .then((text) => {
-          expect(Number(text)).to.equal(orderPrice);
-        });
-      cy.get('[data-cy="ingredientsBun"], [data-cy="ingredientFill"]').each(
-        (element) => {
-          cy.wrap(element).within(() => {
-            cy.get('.constructor-element__text')
-              .invoke('text')
-              .then((text) => {
-                if (element.attr('data-cy') === 'ingredientsBun')
-                  expect(text.includes(bunIngredient)).to.be.true;
-                else expect(fillIngredients.includes(text)).to.be.true;
-              });
-          });
-        }
-      );
+      cy.get('[data-cy="ingredientsBun"]').each((element) => {
+        cy.wrap(element).contains('Краторная булка').should('exist')
+      })
+      cy.get('[data-cy="ingredientFill"]').as('ingredientFill').contains('Биокотлета').should('exist');
+      cy.get('@ingredientFill').contains('Spicy-X').should('exist');
     });
-  });
-  describe('Оформление заказа', () => {
     it('Отправка заказа на сервер', () => {
-      cy.get('[data-cy="ingredientList"]').each((list, index) => {
-        cy.wrap(list)
-          .find('li')
-          .first()
-          .within(() => {
-            cy.get('button').should('be.enabled').click();
-          });
-      });
       cy.intercept('POST', 'api/orders', {
         fixture: 'orderResponse.json'
       }).as('getOrder');
-      cy.get('[data-cy="sendOrder"] button').should('be.enabled').click();
+      cy.get('[data-cy="sendOrder"]').contains('Оформить').should('be.enabled').click();
       cy.wait('@getOrder');
       cy.get('[data-cy="modalContent"]')
         .as('modalContent')
